@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Control Center</title><style>
+body{background:#0f172a;color:white;font-family:sans-serif;padding:20px;max-width:420px;margin:auto}
+h2{color:#38bdf8;text-align:center}.box{background:#1e293b;padding:15px;border-radius:12px;margin:12px 0}
+button{background:#38bdf8;color:#0f172a;border:none;padding:10px;border-radius:8px;font-weight:bold;width:100%;margin-top:8px}
+.off{background:#334155;color:#94a3b8}input{width:92%;padding:10px;border-radius:8px;border:1px solid #38bdf8;background:#0f172a;color:white}
+#log{background:#020617;color:#4ade80;padding:10px;border-radius:8px;font-family:monospace;margin-top:10px}
+</style></head><body><h2>VARDOSANIDZE CONTROL CENTER</h2>
+<div class="box"><b>Системные модули</b>
+<button id="fps" onclick="tog('fps','FPS-оверлей')">FPS-оверлей: ВКЛ</button>
+<button id="upd" class="off" onclick="tog('upd','Автообновления')">Автообновления: ВЫКЛ</button>
+<button onclick="log('Игровой Boost: Макс. FPS!')">Игровой Boost</button></div>
+<div class="box"><b>Встроенный ИИ</b>
+<input id="q" placeholder="Команда (озу, игра, сеть)...">
+<button onclick="ask()">Спросить ИИ</button><div id="log">Система готова.</div></div>
+<script>function tog(i,n){let b=document.getElementById(i);let o=b.classList.toggle('off');b.innerText=n+(o?': ВЫКЛ':': ВКЛ');log(n+(o?' ВЫКЛ':' ВКЛ'));}
+function ask(){let v=document.getElementById('q').value.toLowerCase();log(v.includes('озу')?'ИИ: Занято 500 МБ ОЗУ.':v.includes('игр')?'ИИ: FPS активен!':'ИИ: Выполнено.');}
+function log(t){document.getElementById('log').innerText=t;}</script></body></html>
