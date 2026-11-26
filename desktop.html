@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vardosanidze OS Desktop v2.0</title>
+<style>
+  :root { --bg: radial-gradient(circle at top right, #1d4ed8, #0f172a 55%, #020617); --accent: #38bdf8; }
+  body { margin: 0; height: 100vh; background: var(--bg); color: #f8fafc; font-family: system-ui, sans-serif; overflow: hidden; user-select: none; transition: background 0.5s; }
+  .glass { background: rgba(15, 23, 42, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(56, 189, 248, 0.35); }
+  #hud { position: fixed; top: 12px; right: 12px; padding: 7px 12px; border-radius: 10px; font-family: monospace; font-size: 12px; color: #4ade80; z-index: 5; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+  .desktop { padding: 22px 16px; display: grid; grid-template-columns: repeat(2, 86px); gap: 18px; }
+  .app { text-align: center; cursor: pointer; font-size: 12px; transition: transform 0.15s; }
+  .app:active { transform: scale(0.92); }
+  .app-ico { width: 58px; height: 58px; margin: 0 auto 6px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 6px 16px rgba(0,0,0,0.35); }
+  .win { display: none; position: fixed; top: 52px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 400px; border-radius: 16px; z-index: 20; box-shadow: 0 18px 45px rgba(0,0,0,0.65); overflow: hidden; }
+  .win-bar { background: rgba(2, 6, 23, 0.85); padding: 11px 15px; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--accent); font-size: 14px; }
+  .close-btn { color: #f87171; cursor: pointer; font-size: 16px; padding: 2px 6px; }
+  .chat-box { height: 220px; overflow-y: auto; padding: 12px; font-size: 13px; display: flex; flex-direction: column; gap: 8px; }
+  .msg-ai { background: rgba(56, 189, 248, 0.15); border-left: 3px solid var(--accent); padding: 8px 10px; border-radius: 8px; }
+  .msg-u { background: rgba(255,255,255,0.08); padding: 8px 10px; border-radius: 8px; align-self: flex-end; }
+  .chat-in { display: flex; padding: 10px; gap: 6px; background: rgba(2,6,23,0.6); }
+  .chat-in input { flex: 1; padding: 9px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; outline: none; }
+  .btn { background: var(--accent); color: #0f172a; border: none; padding: 9px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  #vmenu { display: none; position: fixed; bottom: 56px; left: 10px; width: 270px; border-radius: 16px; padding: 14px; z-index: 30; box-shadow: 0 15px 35px rgba(0,0,0,0.7); }
+  .m-item { padding: 10px; border-radius: 10px; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+  .m-item:hover { background: rgba(56, 189, 248, 0.2); }
+  .taskbar { position: fixed; bottom: 0; width: 100%; height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; box-sizing: border-box; z-index: 40; border-bottom: none; border-left: none; border-right: none; }
+  .tray { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #cbd5e1; }
+</style>
+</head>
+<body>
+
+<div id="hud" class="glass">FPS: <span id="fps-v">144</span> | GPU: 38% | RAM: 510MB</div>
+
+<div class="desktop">
+  <div class="app" onclick="openWin('win-cc')"><div class="app-ico glass">⚙️</div>Центр ОС</div>
+  <div class="app" onclick="openWin('win-ai')"><div class="app-ico glass">🤖</div>ИИ Чат</div>
+  <div class="app" onclick="changeWall()"><div class="app-ico glass">🎨</div>Обои</div>
+  <div class="app" onclick="location.href='index.html'"><div class="app-ico glass">🌐</div>О системе</div>
+</div>
+
+<!-- Окно Центра управления -->
+<div id="win-cc" class="win glass">
+  <div class="win-bar"><span>⚙️ Vardosanidze Control Center</span><span class="close-btn" onclick="closeWin('win-cc')">✖</span></div>
+  <iframe src="gui.html" style="width:100%;height:350px;border:none;"></iframe>
+</div>
+
+<!-- Окно живого чата с ИИ -->
+<div id="win-ai" class="win glass">
+  <div class="win-bar"><span>🤖 Vardosanidze AI Core v0.3</span><span class="close-btn" onclick="closeWin('win-ai')">✖</span></div>
+  <div class="chat-box" id="chat">
+    <div class="msg-ai">Привет, Илья! Я локальный ИИ Vardosanidze OS. Напиши <b>буст</b>, <b>память</b> или <b>сеть</b>.</div>
+  </div>
+  <div class="chat-in">
+    <input id="ai-in" placeholder="Спросить ИИ...">
+    <button class="btn" onclick="sendAI()">➤</button>
+  </div>
+</div>
+
+<!-- Выезжающее меню Пуск (V-Menu) -->
+<div id="vmenu" class="glass">
+  <div style="font-weight:bold;color:var(--accent);margin-bottom:8px;padding-left:6px;">🚀 VARDOSANIDZE OS v2.0</div>
+  <div class="m-item" onclick="openWin('win-cc');toggleMenu()">⚙️ Панель управления</div>
+  <div class="m-item" onclick="openWin('win-ai');toggleMenu()">🤖 Локальный ИИ-помощник</div>
+  <div class="m-item" onclick="boostMode();toggleMenu()">⚡ Игровой Boost (Макс. FPS)</div>
+  <div class="m-item" onclick="changeWall();toggleMenu()">🎨 Сменить тему обоев</div>
+  <div class="m-item" onclick="location.href='index.html'" style="color:#f87171;">🔙 На главную страницу</div>
+</div>
+
+<!-- Нижняя панель задач -->
+<div class="taskbar glass">
+  <button class="btn" onclick="toggleMenu()">❖ V-Menu</button>
+  <div class="tray">
+    <span style="color:#4ade80;">● DPI</span>
+    <span id="clock">18:00</span>
+  </div>
+</div>
+
+<script>
+  let wallIdx = 0;
+  const walls = [
+    "radial-gradient(circle at top right, #1d4ed8, #0f172a 55%, #020617)",
+    "radial-gradient(circle at top left, #6d28d9, #1e1b4b 55%, #020617)",
+    "radial-gradient(circle at bottom right, #047857, #064e3b 50%, #020617)",
+    "radial-gradient(circle at center, #be123c, #1f2937 60%, #020617)"
+  ];
+  function changeWall() {
+    wallIdx = (wallIdx + 1) % walls.length;
+    document.body.style.background = walls[wallIdx];
+  }
+  function openWin(id) {
+    document.querySelectorAll('.win').forEach(w => w.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+  }
+  function closeWin(id) { document.getElementById(id).style.display = 'none'; }
+  function toggleMenu() {
+    let m = document.getElementById('vmenu');
+    m.style.display = m.style.display === 'block' ? 'none' : 'block';
+  }
+  function boostMode() {
+    document.getElementById('fps-v').innerText = "240";
+    openWin('win-ai');
+    addMsg("⚡ Игровой Boost активирован! Частота кадров поднята, фоновые процессы заморожены.", "msg-ai");
+  }
+  function addMsg(txt, cls) {
+    let c = document.getElementById('chat');
+    c.innerHTML += `<div class="${cls}">${txt}</div>`;
+    c.scrollTop = c.scrollHeight;
+  }
+  function sendAI() {
+    let inp = document.getElementById('ai-in');
+    let v = inp.value.trim();
+    if (!v) return;
+    addMsg(v, "msg-u");
+    inp.value = "";
+    let t = v.toLowerCase();
+    let ans = "Команда принята! Система работает в оптимальном режиме.";
+    if (t.includes("буст") || t.includes("игр") || t.includes("fps")) { document.getElementById('fps-v').innerText = "240"; ans = "🎮 Игровой профиль включён! FPS-оверлей на максимуме."; }
+    else if (t.includes("памят") || t.includes("озу")) ans = "💾 Занято всего 510 МБ ОЗУ. Свободно более 95% ресурсов!";
+    else if (t.includes("сет") || t.includes("пинг")) ans = "🌐 Сетевой стек BBR и обход DPI активны. Пинг минимальный.";
+    setTimeout(() => addMsg(ans, "msg-ai"), 300);
+  }
+  setInterval(() => {
+    document.getElementById('clock').innerText = new Date().toLocaleTimeString().slice(0,5);
+    let base = parseInt(document.getElementById('fps-v').innerText);
+    if (base > 100) document.getElementById('fps-v').innerText = (base >= 200 ? 238 : 142) + Math.floor(Math.random() * 5);
+  }, 1500);
+</script>
+</body>
+</html>
+
