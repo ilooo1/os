@@ -4,7 +4,8 @@
 
 🌐 **Официальный сайт:** https://ilooo1.github.io/os/
 
-🖥️ **Рабочий стол (Web-демо):** https://github.io
+🖥️ **Рабочий стол (Web-демо):** https://ilooo1.github.io/os/desktop.html?v=5
+
 
 ### 📦 Состав системы (10 модулей):
 - `desktop.html` — графический рабочий стол v3.0 с живым FPS-виджетом, V-Menu и сменой обоев.
