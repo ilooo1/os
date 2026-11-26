@@ -1,31 +1,30 @@
 <!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>Vardosanidze OS</title><style>
-body{background:#0f172a;color:white;font-family:sans-serif;text-align:center;padding:25px 15px;margin:0}
-h1,h2{color:#38bdf8;margin-top:0}.card{background:#1e293b;padding:18px;border-radius:15px;max-width:440px;margin:15px auto;text-align:left}
-.btn{background:#38bdf8;color:#0f172a;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:bold;display:inline-block;margin-top:10px}
-.btn-s{background:#0f172a;color:#38bdf8;border:1px solid #38bdf8;padding:8px 12px;border-radius:8px;margin:4px 2px}
-table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:8px;border-bottom:1px solid #334155}.win{color:#f87171}.vos{color:#4ade80;font-weight:bold}
-#ai-box{background:#0f172a;padding:12px;border-radius:8px;margin-top:10px;border-left:3px solid #38bdf8}
+body{background:#0f172a;color:white;font-family:sans-serif;text-align:center;padding:20px}
+h1,h2{color:#38bdf8;margin-top:0}.card{background:#1e293b;padding:18px;border-radius:15px;max-width:460px;margin:15px auto}
+.btn{display:inline-block;background:#38bdf8;color:#0f172a;padding:14px 28px;border-radius:10px;text-decoration:none;font-weight:bold;margin-top:10px}
+.btn-s{background:#0f172a;color:#38bdf8;border:1px solid #38bdf8;padding:8px 12px;border-radius:8px;margin:4px}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:8px;border-bottom:1px solid #334155;text-align:left}
+.win{color:#4ade80;font-weight:bold}.los{color:#f87171}#ai-box{background:#0f172a;padding:12px;border-radius:8px;margin-top:10px;border-left:3px solid #38bdf8}
 </style></head><body>
 <h1>Vardosanidze OS</h1><h3>Быстрая система со встроенным ИИ</h3>
 <div class="card"><h2>⚡ Главные фишки</h2>
 <p>🚀 Минимум потребления ОЗУ и места</p><p>🚫 Никаких принудительных обновлений</p>
-<p>🤖 Встроенный локальный ИИ</p><p>🌐 Умные сетевые модули из коробки</p></div> <p>📊 Встроенный счётчик FPS по умолчанию</p>
-
+<p>🤖 Встроенный локальный ИИ</p><p>🌐 Умные сетевые модули из коробки</p></div>
 <div class="card"><h2>⚔️ Сравнение с Windows 11</h2><table>
 <tr><th>Параметр</th><th>Windows 11</th><th>Vardosanidze OS</th></tr>
-<tr><td>Вес системы</td><td class="win">~30 ГБ</td><td class="vos">~6 ГБ</td></tr>
-<tr><td>ОЗУ в покое</td><td class="win">3.5 – 4 ГБ</td><td class="vos">~500 МБ</td></tr>
-<tr><td>Обновления</td><td class="win">Принудительно</td><td class="vos">По кнопке</td></tr>
-<tr><td>Локальный ИИ</td><td class="win">Нет</td><td class="vos">Встроен в ядро</td></tr></table></div>
+<tr><td>Вес системы</td><td class="los">~30 ГБ</td><td class="win">~6 ГБ</td></tr>
+<tr><td>ОЗУ в покое</td><td class="los">3.5 - 4 ГБ</td><td class="win">~500 МБ</td></tr>
+<tr><td>Обновления</td><td class="los">Принудительно</td><td class="win">По кнопке</td></tr>
+<tr><td>Локальный ИИ</td><td class="los">Нет</td><td class="win">Встроен в ядро</td></tr></table></div>
 <div class="card"><h2>🤖 Тест встроенного ИИ</h2>
 <button class="btn-s" onclick="ai(1)">Очистить ОЗУ</button><button class="btn-s" onclick="ai(2)">Игровой режим</button>
 <div id="ai-box">ИИ готов к работе...</div></div>
 <div class="card"><h2>📅 Дневник разработки</h2>
-<p>✅ <b>Этап 1:</b> Запуск сайта v0.2</p><p>✅ <b>Этап 2:</b> Прототип Центра управления (v0.2)</p><p>🔒 <b>Этап 3:</b> Сборка ISO на ПК</p></div 
+<p>✅ <b>Этап 1:</b> Запуск сайта и рабочего стола</p><p>✅ <b>Этап 2:</b> Прототип Центра управления и ИИ</p><p>✅ <b>Этап 3:</b> Сборка установщика для ПК (v1.0)</p></div>
 <a href="install_vardosanidze.sh" download class="btn">📥 Скачать сборку v1.0 (Linux)</a>
+<h6>Версия 1.0 Release | Разработчик: Илья Вардосанидзе</h6>
+<script>function ai(n){let b=document.getElementById("ai-box");b.innerHTML=n==1?"⚡ Кэш очищен! Освобождено 1.2 ГБ ОЗУ.":"🎮 Игровой режим ВКЛ! FPS-оверлей активен.";}</script>
+<br><a href="desktop.html" class="btn-s" style="display:inline-block;margin-top:10px;text-decoration:none;">🖥️ Запустить рабочий стол OS</a>
+<br><a href="gui.html" class="btn-s" style="display:inline-block;margin-top:10px;text-decoration:none;">⚙️ Открыть Центр управления (Web)</a>
+</body></html>
 
-
-<h6>Версия 0.2 Web | Разработчик: Илья Вардосанидзе</h6>
-<script>function ai(n){let b=document.getElementById("ai-box");b.innerHTML=n==1?"⚡ <b>ИИ:</b> Освобождено 1.4 ГБ ОЗУ!":"🎮 <b>ИИ:</b> Включен игровой режим!";}</script></body></html>
-<br><a href="https://github.com" class="btn-s" style="display:inline-block;margin-top:12px;text-decoration:none;">💻 Исходный код (GitHub)</a>
-<br><a href="gui.html" class="btn-s" style="display:inline-block;margin-top:12px;text-decoration:none;">⚙️ Открыть Центр управления (Web)</a>
